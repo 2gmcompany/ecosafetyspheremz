@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco Safetysphere | Consultoria em Ambiente, Qualidade e Segurança</title>
+    <meta name="description" content="Soluções integradas em Ambiente, Qualidade e Segurança no Trabalho. A Eco Safetysphere garante conformidade ISO 9001 (Qualidade), 14001 (Ambiente), 45001 (Segurança) e sustentabilidade.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#059669', // Emerald 600
+                        secondary: '#0f172a', // Slate 900
+                        accent: '#eab308', // Yellow 500
+                        light: '#f8fafc',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        .hero-bg {
+            background-image: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-700 bg-light antialiased">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="flex items-center gap-2">
+                        <img src="ESS Logo LinkedIn.jpg" alt="Eco Safetysphere Logo" class="h-14 w-auto object-contain">
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-secondary hover:text-primary font-medium transition">Início</a>
+                    <a href="#about" class="text-secondary hover:text-primary font-medium transition">Sobre Nós</a>
+                    <a href="#services" class="text-secondary hover:text-primary font-medium transition">Serviços</a>
+                    <a href="#why-us" class="text-secondary hover:text-primary font-medium transition">Diferenciais</a>
+                    <a href="#contact" class="bg-primary text-white px-6 py-2.5 rounded-full font-medium hover:bg-emerald-700 transition shadow-lg hover:shadow-xl transform active:scale-95">
+                        Fale Connosco
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="text-secondary hover:text-primary focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="px-4 pt-2 pb-6 space-y-2 shadow-lg">
+                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-secondary hover:text-primary hover:bg-slate-50">Início</a>
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-secondary hover:text-primary hover:bg-slate-50">Sobre Nós</a>
+                <a href="#services" class="block px-3 py-2 rounded-md text-base font-medium text-secondary hover:text-primary hover:bg-slate-50">Serviços</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-primary font-bold hover:bg-slate-50">Contactar</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg h-screen flex items-center justify-center relative pt-20">
+        <div class="text-center px-4 max-w-5xl mx-auto text-white" data-aos="fade-up">
+            <div class="inline-block bg-primary/20 border border-primary/40 rounded-full px-4 py-1 mb-6 backdrop-blur-sm">
+                <span class="text-emerald-300 font-semibold text-sm tracking-wide uppercase">Excelência em QHSE</span>
+            </div>
+            <h1 class="font-heading text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                Qualidade, Ambiente e Segurança.<br>Garantindo o Futuro.
+            </h1>
+            <p class="text-lg md:text-xl text-gray-200 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Consultoria especializada em Sistemas de Gestão Integrados e Conformidade Legal. Soluções sustentáveis para empresas que valorizam a excelência.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#services" class="bg-primary text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-emerald-700 transition shadow-lg">
+                    Nossos Serviços
+                </a>
+                <a href="#contact" class="bg-white text-secondary px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition shadow-lg border border-transparent hover:border-gray-200">
+                    Solicitar Proposta
+                </a>
+            </div>
+        </div>
+        
+        <!-- Scroll Down Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#about" class="text-white opacity-70 hover:opacity-100">
+                <i class="fa-solid fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="relative">
+                    <div class="absolute -top-4 -left-4 w-24 h-24 bg-primary/10 rounded-full z-0"></div>
+                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Reunião de equipa Eco Safetysphere" class="relative z-10 rounded-2xl shadow-2xl w-full object-cover h-[500px]">
+                    <div class="absolute -bottom-6 -right-6 bg-secondary text-white p-8 rounded-xl shadow-xl z-20 hidden md:block">
+                        <p class="font-heading font-bold text-4xl text-primary mb-1">ISO</p>
+                        <p class="text-sm font-medium uppercase tracking-wider">Especialistas em<br>Implementação</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-primary font-bold uppercase tracking-wider mb-2">Sobre a Eco Safetysphere</h4>
+                    <h2 class="font-heading text-3xl md:text-4xl font-bold text-secondary mb-6">Líderes em Consultoria QHSE</h2>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        A <strong>Eco Safetysphere</strong> nasceu com a missão de integrar a sustentabilidade ambiental, a qualidade e a segurança operacional. Acreditamos que um ambiente de trabalho seguro e processos certificados não são apenas exigências legais, mas pilares fundamentais para o sucesso empresarial a longo prazo.
+                    </p>
+                    <p class="text-gray-600 mb-8 leading-relaxed">
+                        Com uma equipa multidisciplinar experiente, oferecemos suporte técnico rigoroso para garantir que a sua organização cumpre todas as normativas nacionais e internacionais, minimizando riscos e maximizando a eficiência.
+                    </p>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check-circle text-primary text-xl"></i>
+                            <span class="font-medium text-secondary">Conformidade Legal Rigorosa</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check-circle text-primary text-xl"></i>
+                            <span class="font-medium text-secondary">Implementação ISO 9001 (Gestão da Qualidade), ISO 14001 (Gestão Ambiental) e ISO 45001 (Gestão da Segurança)</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check-circle text-primary text-xl"></i>
+                            <span class="font-medium text-secondary">Sustentabilidade Corporativa</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h4 class="text-primary font-bold uppercase tracking-wider mb-2">O Que Fazemos</h4>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-secondary">As Nossas Soluções</h2>
+                <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Oferecemos um portfólio completo de serviços para garantir a segurança dos seus colaboradores, a qualidade dos processos e a proteção do meio ambiente.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="service-card bg-white p-8 rounded-xl shadow-sm border border-gray-100 transition duration-300">
+                    <div class="w-14 h-14 bg-green-100 text-primary rounded-lg flex items-center justify-center mb-6 text-2xl">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-secondary mb-3">Consultoria Ambiental</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                        Estudos de Impacto Ambiental (EIA), Planos de Gestão Ambiental (PGA) e auditorias para garantir operações sustentáveis.
+                    </p>
+                    <a href="#contact" class="text-primary font-semibold hover:text-emerald-700 text-sm flex items-center gap-1">Saiba mais <i class="fa-solid fa-arrow-right text-xs"></i></a>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="service-card bg-white p-8 rounded-xl shadow-sm border border-gray-100 transition duration-300">
+                    <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-6 text-2xl">
+                        <i class="fa-solid fa-helmet-safety"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-secondary mb-3">Higiene e Segurança (HST)</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                        Implementação de sistemas de gestão de segurança, avaliação de riscos ocupacionais e fornecimento de EPIs.
+                    </p>
+                    <a href="#contact" class="text-primary font-semibold hover:text-emerald-700 text-sm flex items-center gap-1">Saiba mais <i class="fa-solid fa-arrow-right text-xs"></i></a>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="service-card bg-white p-8 rounded-xl shadow-sm border border-gray-100 transition duration-300">
+                    <div class="w-14 h-14 bg-yellow-100 text-yellow-600 rounded-lg flex items-center justify-center mb-6 text-2xl">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-secondary mb-3">Formação e Treinamento</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                        Cursos de segurança no trabalho, combate a incêndios, primeiros socorros e conscientização ambiental para equipas.
+                    </p>
+                    <a href="#contact" class="text-primary font-semibold hover:text-emerald-700 text-sm flex items-center gap-1">Saiba mais <i class="fa-solid fa-arrow-right text-xs"></i></a>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="service-card bg-white p-8 rounded-xl shadow-sm border border-gray-100 transition duration-300">
+                    <div class="w-14 h-14 bg-red-100 text-red-600 rounded-lg flex items-center justify-center mb-6 text-2xl">
+                        <i class="fa-solid fa-fire-extinguisher"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-secondary mb-3">Planos de Emergência</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                        Elaboração de planos de emergência internos, simulacros e sinalização de segurança conforme a legislação vigente.
+                    </p>
+                    <a href="#contact" class="text-primary font-semibold hover:text-emerald-700 text-sm flex items-center gap-1">Saiba mais <i class="fa-solid fa-arrow-right text-xs"></i></a>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="service-card bg-white p-8 rounded-xl shadow-sm border border-gray-100 transition duration-300">
+                    <div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-6 text-2xl">
+                        <i class="fa-solid fa-recycle"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-secondary mb-3">Gestão de Resíduos</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                        Planos de gestão de resíduos sólidos e perigosos, garantindo o descarte e tratamento correto e certificado.
+                    </p>
+                    <a href="#contact" class="text-primary font-semibold hover:text-emerald-700 text-sm flex items-center gap-1">Saiba mais <i class="fa-solid fa-arrow-right text-xs"></i></a>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="service-card bg-white p-8 rounded-xl shadow-sm border border-gray-100 transition duration-300">
+                    <div class="w-14 h-14 bg-teal-100 text-teal-600 rounded-lg flex items-center justify-center mb-6 text-2xl">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-secondary mb-3">Sistemas de Gestão ISO</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                        Consultoria para implementação das normas <strong>ISO 9001 (Gestão da Qualidade), ISO 14001 (Gestão Ambiental) e ISO 45001 (Gestão da Segurança)</strong>. Realização de auditorias de conformidade baseadas na <strong>ISO 19011 (Diretrizes para Auditoria)</strong>.
+                    </p>
+                    <a href="#contact" class="text-primary font-semibold hover:text-emerald-700 text-sm flex items-center gap-1">Saiba mais <i class="fa-solid fa-arrow-right text-xs"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us / Stats -->
+    <section id="why-us" class="py-20 bg-secondary text-white relative overflow-hidden">
+        <!-- Decorative BG Elements -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-primary opacity-10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-blue-500 opacity-10 rounded-full blur-3xl"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <div>
+                    <h4 class="text-primary font-bold uppercase tracking-wider mb-2">Porquê a Eco Safetysphere?</h4>
+                    <h2 class="font-heading text-3xl md:text-4xl font-bold mb-6">Compromisso com a Excelência e Segurança</h2>
+                    <p class="text-gray-400 mb-6 leading-relaxed">
+                        Não somos apenas consultores; somos parceiros estratégicos do seu negócio. A nossa abordagem combina conhecimento técnico profundo com uma compreensão prática das realidades industriais.
+                    </p>
+                    
+                    <div class="space-y-6 mt-8">
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+                                <i class="fa-solid fa-handshake text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-1">Parceria Dedicada</h3>
+                                <p class="text-gray-400 text-sm">Acompanhamento contínuo desde o planeamento até à execução.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+                                <i class="fa-solid fa-award text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-1">Certificação e Qualidade</h3>
+                                <p class="text-gray-400 text-sm">Metodologias alinhadas com as normas ISO internacionais.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Simple CTA Card -->
+                <div class="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10 flex flex-col justify-center items-center text-center">
+                    <i class="fa-solid fa-quote-left text-4xl text-primary mb-6 opacity-50"></i>
+                    <p class="text-xl font-medium italic mb-6">"A segurança não é um custo, é um investimento na vida e na continuidade do negócio."</p>
+                    <div class="w-16 h-1 bg-primary rounded-full mb-4"></div>
+                    <p class="text-sm text-gray-400 uppercase tracking-widest">Valores Eco Safetysphere</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h4 class="text-primary font-bold uppercase tracking-wider mb-2">Contacte-nos</h4>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-secondary">Vamos Conversar?</h2>
+                <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Estamos prontos para ajudar a sua empresa a atingir os mais altos padrões de qualidade e segurança.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Contact Info -->
+                <div class="bg-slate-50 p-8 rounded-xl shadow-sm h-full">
+                    <h3 class="font-heading text-xl font-bold text-secondary mb-6">Informações</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center text-primary flex-shrink-0">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-secondary">Endereço</p>
+                                <p class="text-gray-600 text-sm">Rua Chafurdine Khan n°41 R/C,<br>Malhangalene, Kampfumo,<br>Cidade de Maputo.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center text-primary flex-shrink-0">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-secondary">Email</p>
+                                <p class="text-gray-600 text-sm break-all"><a href="mailto:info@safetyspheremz.net" class="hover:text-primary">info@safetyspheremz.net</a></p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center text-primary flex-shrink-0">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-secondary">Whatsapp</p>
+                                <p class="text-gray-600 text-sm"><a href="https://wa.me/258861068131" target="_blank" class="hover:text-primary font-medium">+258 86 106 8131</a></p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center text-primary flex-shrink-0">
+                                <i class="fa-brands fa-linkedin-in"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-secondary">Redes Sociais</p>
+                                <p class="text-gray-600 text-sm"><a href="https://www.linkedin.com/company/eco-safetysphere/" target="_blank" class="hover:text-primary underline">Siga-nos no LinkedIn</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="lg:col-span-2 bg-white border border-gray-100 p-8 rounded-xl shadow-lg">
+                    <form onsubmit="event.preventDefault(); alert('Obrigado pelo contacto! Responderemos em breve.');">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
+                                <input type="text" id="name" class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition" placeholder="Seu nome" required>
+                            </div>
+                            <div>
+                                <label for="company" class="block text-sm font-medium text-gray-700 mb-1">Empresa</label>
+                                <input type="text" id="company" class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition" placeholder="Nome da empresa">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Profissional</label>
+                                <input type="email" id="email" class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition" placeholder="exemplo@empresa.com" required>
+                            </div>
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
+                                <input type="tel" id="phone" class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition" placeholder="+258 ...">
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Como podemos ajudar?</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition" placeholder="Descreva a sua necessidade..." required></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-primary text-white font-bold py-4 rounded-lg hover:bg-emerald-700 transition shadow-md hover:shadow-lg transform active:scale-[0.99]">
+                            Enviar Mensagem
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-2 mb-4">
+                        <img src="ESS Logo LinkedIn.jpg" alt="Eco Safetysphere Logo" class="h-12 w-auto bg-white rounded p-1 object-contain">
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed max-w-md">
+                        Dedicados a criar ambientes de trabalho mais seguros e um planeta mais sustentável através de consultoria especializada e soluções técnicas inovadoras.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Links Rápidos</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#home" class="hover:text-primary transition">Início</a></li>
+                        <li><a href="#about" class="hover:text-primary transition">Sobre Nós</a></li>
+                        <li><a href="#services" class="hover:text-primary transition">Serviços</a></li>
+                        <li><a href="#contact" class="hover:text-primary transition">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-primary transition">Política de Privacidade</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Termos de Uso</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm text-center md:text-left">
+                    &copy; 2025 Eco Safetysphere. Todos os direitos reservados.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="https://www.linkedin.com/company/eco-safetysphere/" class="text-gray-400 hover:text-primary transition text-lg">
+                        <i class="fa-brands fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-primary transition text-lg">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-primary transition text-lg">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 10) {
+                navbar.classList.add('shadow-md');
+                navbar.classList.remove('shadow-none');
+            } else {
+                navbar.classList.remove('shadow-md');
+                navbar.classList.add('shadow-none');
+            }
+        });
+    </script>
+</body>
+</html>
