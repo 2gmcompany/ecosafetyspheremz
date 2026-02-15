@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio HSEQ 2026 | Eco Safetysphere</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#059669', // Verde ESS
+                        secondary: '#0f172a',
+                        accent: '#eab308',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .gradient-bg { background: linear-gradient(135deg, #0f172a 0%, #059669 100%); }
+        @keyframes timer-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); color: #ef4444; }
+            100% { transform: scale(1); }
+        }
+        .timer-warning { animation: timer-pulse 0.5s infinite; }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen text-slate-800 font-sans">
+
+    <div id="app" class="max-w-4xl mx-auto p-4 md:p-8">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-8 bg-white/10 p-4 rounded-2xl backdrop-blur-md">
+            <img src="ESS Logo LinkedIn.png" alt="Eco Safetysphere" class="h-10 w-auto bg-white p-1 rounded">
+            <div class="text-right text-white">
+                <p class="text-xs uppercase tracking-widest opacity-70">Desafio Semanal</p>
+                <p id="week-display" class="font-bold text-accent">Semana de Fevereiro</p>
+            </div>
+        </header>
+
+        <!-- Main Container -->
+        <main class="glass rounded-3xl shadow-2xl p-6 md:p-10 min-h-[500px] flex flex-col">
+            
+            <!-- Screen 1: Welcome & Login -->
+            <div id="screen-welcome" class="text-center py-10">
+                <div class="mb-8">
+                    <i class="fa-solid fa-trophy text-6xl text-accent mb-4 block"></i>
+                    <h1 class="text-3xl font-bold text-secondary mb-2">Grande Desafio HSEQ</h1>
+                    <p class="text-gray-600">Mostre que é um especialista em segurança. O Top 3 ganha prémios exclusivos!</p>
+                </div>
+                
+                <div class="max-w-sm mx-auto space-y-4">
+                    <input type="text" id="user-name" placeholder="Seu Nome Completo" class="w-full p-4 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary outline-none text-center font-bold">
+                    <button onclick="startQuiz()" class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:bg-emerald-700 transition transform hover:scale-105">
+                        Começar Desafio
+                    </button>
+                    <button onclick="showLeaderboard()" class="w-full text-primary font-semibold py-2 hover:underline">
+                        Ver Ranking Semanal
+                    </button>
+                </div>
+            </div>
+
+            <!-- Screen 2: Quiz Engine -->
+            <div id="screen-quiz" class="hidden flex-grow flex flex-col">
+                <div class="flex justify-between items-center mb-6 border-b pb-4">
+                    <div class="flex items-center gap-2">
+                        <span id="q-count" class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-bold">Questão 1/10</span>
+                    </div>
+                    <div id="timer" class="text-2xl font-mono font-bold text-secondary">
+                        <i class="fa-solid fa-clock mr-2 text-primary"></i>15s
+                    </div>
+                </div>
+
+                <div id="question-container" class="mb-8">
+                    <h2 id="question-text" class="text-xl md:text-2xl font-bold text-secondary mb-6 leading-tight">
+                        A carregar questão...
+                    </h2>
+                    <div id="options-grid" class="grid grid-cols-1 gap-4">
+                        <!-- Options injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 3: Leaderboard -->
+            <div id="screen-leaderboard" class="hidden">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-2xl font-bold text-secondary">Ranking da Semana</h2>
+                    <button onclick="location.reload()" class="text-sm text-primary font-bold"><i class="fa-solid fa-rotate-left mr-1"></i> Voltar</button>
+                </div>
+                <div id="leaderboard-list" class="space-y-3">
+                    <!-- Leaderboard items injected here -->
+                </div>
+                <div class="mt-10 p-4 bg-accent/10 rounded-xl border border-accent/20">
+                    <p class="text-sm text-secondary text-center italic">Resultados zerados todos os domingos às 23:59.</p>
+                </div>
+            </div>
+
+            <!-- Screen 4: Result -->
+            <div id="screen-result" class="hidden text-center py-10">
+                <div id="result-icon"></div>
+                <h2 class="text-3xl font-bold text-secondary mb-2" id="result-title">Parabéns!</h2>
+                <p class="text-gray-600 mb-8" id="result-text">Completou o desafio.</p>
+                
+                <div class="grid grid-cols-2 gap-4 max-w-sm mx-auto mb-8">
+                    <div class="bg-slate-50 p-4 rounded-xl border">
+                        <p class="text-xs uppercase text-gray-400">Pontuação</p>
+                        <p id="final-score" class="text-2xl font-bold text-primary">0</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border">
+                        <p class="text-xs uppercase text-gray-400">Certas</p>
+                        <p id="final-correct" class="text-2xl font-bold text-secondary">0/10</p>
+                    </div>
+                </div>
+                
+                <button onclick="showLeaderboard()" class="bg-secondary text-white px-8 py-3 rounded-xl font-bold hover:bg-slate-800 transition">
+                    Ver Posição no Ranking
+                </button>
+            </div>
+
+        </main>
+        
+        <footer class="mt-8 text-center text-white/50 text-sm">
+            &copy; 2026 Eco Safetysphere | Garantindo um futuro mais seguro.
+        </footer>
+    </div>
+
+    <!-- Firebase Config & App Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, doc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+
+        // CONFIGURAÇÃO FIREBASE
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'hseq-challenge-2026';
+
+        // ESTADO GLOBAL
+        let currentUser = null;
+        let score = 0;
+        let correctAnswers = 0;
+        let currentQuestionIndex = 0;
+        let timer = null;
+        let timeLeft = 15;
+        let userName = "";
+
+        // QUESTÕES (Exemplo de Banco de Dados)
+        const questions = [
+            {
+                q: "Antes de iniciar um trabalho a quente numa zona com risco de explosão, qual é o primeiro passo crítico?",
+                options: ["Ligar o exaustor", "Medição de gases (explosimetria)", "Colocar a máscara", "Avisar a receção"],
+                correct: 1,
+                hint: "Precisa saber se o ar é inflamável."
+            },
+            {
+                q: "A regra de ouro para trabalho em altura exige uso de arnês acima de que altura (norma geral)?",
+                options: ["1 metro", "1.5 metros", "2 metros", "5 metros"],
+                correct: 2,
+                hint: "É a altura padrão de segurança industrial."
+            },
+            {
+                q: "O que significa a sigla LOTO em isolamento de energias?",
+                options: ["Lock Out, Tag Out", "Log On, Tune Out", "Level One, Time Out", "Light On, Turned Off"],
+                correct: 0,
+                hint: "Trata-se de bloquear e sinalizar."
+            },
+            {
+                q: "Num incêndio de origem elétrica, qual extintor NUNCA deve ser usado?",
+                options: ["CO2", "Pó Químico", "Água", "Espuma"],
+                correct: 2,
+                hint: "Água conduz eletricidade."
+            },
+            {
+                q: "Qual a cor padrão de segurança para indicar 'Cuidado' ou 'Risco' no ambiente industrial?",
+                options: ["Verde", "Azul", "Vermelho", "Amarelo"],
+                correct: 3,
+                hint: "Pense nos semáforos."
+            }
+        ];
+
+        // INICIALIZAÇÃO AUTH
+        const initAuth = async () => {
+            try {
+                await signInAnonymously(auth);
+                onAuthStateChanged(auth, (user) => {
+                    currentUser = user;
+                });
+            } catch (error) {
+                console.error("Erro na autenticação:", error);
+            }
+        };
+        initAuth();
+
+        // NAVEGAÇÃO ENTRE TELAS
+        window.showScreen = (screenId) => {
+            const screens = ['screen-welcome', 'screen-quiz', 'screen-leaderboard', 'screen-result'];
+            screens.forEach(s => document.getElementById(s).classList.add('hidden'));
+            document.getElementById(screenId).classList.remove('hidden');
+        };
+
+        // LÓGICA DO QUIZ
+        window.startQuiz = () => {
+            userName = document.getElementById('user-name').value.trim();
+            if (!userName) {
+                alert("Por favor, introduza o seu nome para o ranking.");
+                return;
+            }
+            score = 0;
+            correctAnswers = 0;
+            currentQuestionIndex = 0;
+            showScreen('screen-quiz');
+            loadQuestion();
+        };
+
+        const loadQuestion = () => {
+            if (currentQuestionIndex >= questions.length) {
+                finishQuiz();
+                return;
+            }
+
+            const qData = questions[currentQuestionIndex];
+            document.getElementById('q-count').innerText = `Questão ${currentQuestionIndex + 1}/${questions.length}`;
+            document.getElementById('question-text').innerText = qData.q;
+            
+            const grid = document.getElementById('options-grid');
+            grid.innerHTML = '';
+            
+            qData.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "p-4 text-left border-2 border-gray-100 rounded-xl hover:bg-primary/5 hover:border-primary transition font-medium flex justify-between items-center group";
+                btn.innerHTML = `<span>${opt}</span> <i class="fa-solid fa-circle-chevron-right text-gray-300 group-hover:text-primary"></i>`;
+                btn.onclick = () => checkAnswer(idx);
+                grid.appendChild(btn);
+            });
+
+            startTimer();
+        };
+
+        const startTimer = () => {
+            clearInterval(timer);
+            timeLeft = 15;
+            const timerEl = document.getElementById('timer');
+            timerEl.classList.remove('timer-warning');
+            timerEl.innerHTML = `<i class="fa-solid fa-clock mr-2 text-primary"></i>${timeLeft}s`;
+
+            timer = setInterval(() => {
+                timeLeft--;
+                timerEl.innerHTML = `<i class="fa-solid fa-clock mr-2 text-primary"></i>${timeLeft}s`;
+                
+                if (timeLeft <= 5) timerEl.classList.add('timer-warning');
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    checkAnswer(-1); // Tempo esgotado
+                }
+            }, 1000);
+        };
+
+        const checkAnswer = (selectedIdx) => {
+            clearInterval(timer);
+            const qData = questions[currentQuestionIndex];
+            
+            if (selectedIdx === qData.correct) {
+                correctAnswers++;
+                // Bónus de tempo: 100 pontos base + segundos restantes * 10
+                score += 100 + (timeLeft * 10);
+            }
+
+            currentQuestionIndex++;
+            loadQuestion();
+        };
+
+        const finishQuiz = async () => {
+            showScreen('screen-result');
+            document.getElementById('final-score').innerText = score;
+            document.getElementById('final-correct').innerText = `${correctAnswers}/${questions.length}`;
+            
+            if (correctAnswers >= questions.length * 0.8) {
+                document.getElementById('result-icon').innerHTML = `<i class="fa-solid fa-medal text-6xl text-accent mb-4 block"></i>`;
+                document.getElementById('result-title').innerText = "Excelente Performance!";
+            } else {
+                document.getElementById('result-icon').innerHTML = `<i class="fa-solid fa-circle-check text-6xl text-primary mb-4 block"></i>`;
+                document.getElementById('result-title').innerText = "Desafio Concluído";
+            }
+
+            // SALVAR NO FIRESTORE
+            if (currentUser) {
+                try {
+                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'scores'), {
+                        name: userName,
+                        score: score,
+                        correct: correctAnswers,
+                        timestamp: serverTimestamp(),
+                        uid: currentUser.uid
+                    });
+                } catch (e) {
+                    console.error("Erro ao gravar pontuação:", e);
+                }
+            }
+        };
+
+        // LEADERBOARD (RANKING)
+        window.showLeaderboard = async () => {
+            showScreen('screen-leaderboard');
+            const list = document.getElementById('leaderboard-list');
+            list.innerHTML = '<p class="text-center text-gray-400 py-10">A carregar ranking...</p>';
+
+            try {
+                // Em JS fazemos a ordenação por score e tempo após buscar (seguindo a regra de queries simples)
+                const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'scores'));
+                const querySnapshot = await getDocs(q);
+                
+                let data = [];
+                querySnapshot.forEach(doc => data.push(doc.data()));
+
+                // Filtrar apenas resultados da última semana e ordenar
+                const now = new Date();
+                const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                
+                const filteredData = data
+                    .filter(item => item.timestamp?.toDate() > oneWeekAgo)
+                    .sort((a, b) => b.score - a.score)
+                    .slice(0, 10);
+
+                list.innerHTML = '';
+                if (filteredData.length === 0) {
+                    list.innerHTML = '<p class="text-center text-gray-400 py-10">Nenhum resultado esta semana ainda. Seja o primeiro!</p>';
+                    return;
+                }
+
+                filteredData.forEach((entry, index) => {
+                    const isTop3 = index < 3;
+                    const item = document.createElement('div');
+                    item.className = `flex justify-between items-center p-4 rounded-xl ${isTop3 ? 'bg-primary/10 border-l-4 border-primary' : 'bg-gray-50 border'}`;
+                    
+                    const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`;
+                    
+                    item.innerHTML = `
+                        <div class="flex items-center gap-4">
+                            <span class="text-lg font-bold w-6 text-center">${medal}</span>
+                            <div>
+                                <p class="font-bold text-secondary">${entry.name}</p>
+                                <p class="text-xs text-gray-400">${entry.correct} acertos</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-black text-primary">${entry.score}</p>
+                            <p class="text-[10px] uppercase font-bold text-gray-400">PTS</p>
+                        </div>
+                    `;
+                    list.appendChild(item);
+                });
+
+            } catch (e) {
+                console.error("Erro ao ler leaderboard:", e);
+                list.innerHTML = '<p class="text-center text-red-500 py-10">Erro ao carregar dados.</p>';
+            }
+        };
+
+        // Helpers
+        const updateWeekDisplay = () => {
+            const now = new Date();
+            const startOfYear = new Date(now.getFullYear(), 0, 1);
+            const pastDaysOfYear = (now - startOfYear) / 86400000;
+            const weekNum = Math.ceil((pastDaysOfYear + startOfYear.getDay() + 1) / 7);
+            document.getElementById('week-display').innerText = `Semana ${weekNum} de 2026`;
+        };
+        updateWeekDisplay();
+
+    </script>
+</body>
+</html>
