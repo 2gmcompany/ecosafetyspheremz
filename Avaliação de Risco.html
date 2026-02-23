@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliação de Risco Online | ESS</title>
+    <link rel="icon" type="image/png" href="Arco ESS.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @media print {
+            .no-print { display: none; }
+            body { background: white; }
+            .print-container { border: none; box-shadow: none; width: 100%; max-width: 100%; }
+        }
+        .logo-img { height: 60px; width: auto; object-fit: contain; }
+    </style>
+</head>
+<body class="bg-gray-100 p-5 md:p-10">
+
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg print-container">
+        
+        <div class="flex flex-col md:flex-row justify-between items-center border-b pb-6 mb-6 gap-4">
+            <div class="flex items-center gap-4">
+                <img src="ESS Logo LinkedIn.jpg" alt="ESS Logo" class="logo-img">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Avaliação de Risco</h1>
+                    <p class="text-sm text-gray-500">Segurança e Saúde no Trabalho</p>
+                </div>
+            </div>
+            <button onclick="window.print()" class="no-print bg-blue-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition shadow-md">
+                🖨️ Imprimir Relatório
+            </button>
+        </div>
+
+        <div class="mb-8 no-print bg-blue-50 p-4 rounded-lg">
+            <label class="block text-sm font-bold mb-2 text-blue-900">Selecione o Método de Avaliação:</label>
+            <select id="methodSelector" onchange="switchMethod()" class="w-full p-2 border border-blue-200 rounded bg-white focus:ring-2 focus:ring-blue-500 outline-none">
+                <option value="marat">Método MARAT (Probabilidade x Gravidade)</option>
+                <option value="fine">Método William Fine (Grau de Perigosidade)</option>
+            </select>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div>
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Posto de Trabalho / Atividade:</label>
+                <input type="text" class="w-full p-2 border-b-2 border-gray-200 focus:border-blue-500 outline-none transition" placeholder="Ex: Manutenção Industrial">
+            </div>
+            <div>
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Data da Avaliação:</label>
+                <input type="date" id="currentDate" class="w-full p-2 border-b-2 border-gray-200 focus:border-blue-500 outline-none transition">
+            </div>
+        </div>
+
+        <div id="maratFields" class="method-section">
+            <h2 class="text-lg font-bold mb-4 text-blue-800 flex items-center gap-2">
+                <span class="w-2 h-6 bg-blue-800 rounded-full"></span> Parâmetros MARAT
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-4 rounded-xl">
+                <div>
+                    <label class="block text-sm font-semibold mb-2 text-gray-700">Probabilidade (P):</label>
+                    <select id="maratP" class="w-full p-2 border rounded shadow-sm">
+                        <option value="1">1 - Remota (Muito improvável)</option>
+                        <option value="2">2 - Improvável (Pode ocorrer raramente)</option>
+                        <option value="3">3 - Provável (Ocorre periodicamente)</option>
+                        <option value="4">4 - Muito Provável (Quase certo)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2 text-gray-700">Gravidade/Consequência (G):</label>
+                    <select id="maratG" class="w-full p-2 border rounded shadow-sm">
+                        <option value="1">1 - Ligeira (Sem baixa)</option>
+                        <option value="2">2 - Séria (Incapacidade temporária)</option>
+                        <option value="3">3 - Grave (Incapacidade permanente)</option>
+                        <option value="4">4 - Catastrófica (Morte)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div id="fineFields" class="method-section hidden">
+            <h2 class="text-lg font-bold mb-4 text-green-800 flex items-center gap-2">
+                <span class="w-2 h-6 bg-green-800 rounded-full"></span> Parâmetros William Fine
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-gray-50 p-4 rounded-xl">
+                <div>
+                    <label class="block text-sm font-semibold mb-2 text-gray-700">Consequências (C):</label>
+                    <select id="fineC" class="w-full p-2 border rounded shadow-sm">
+                        <option value="1">1 - Ligeira</option>
+                        <option value="5">5 - Médica</option>
+                        <option value="15">15 - Grave</option>
+                        <option value="50">50 - Fatalidade</option>
+                        <option value="100">100 - Catástrofe</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2 text-gray-700">Exposição (E):</label>
+                    <select id="fineE" class="w-full p-2 border rounded shadow-sm">
+                        <option value="0.5">0.5 - Muito rara</option>
+                        <option value="1">1 - Rara</option>
+                        <option value="3">3 - Ocasional</option>
+                        <option value="6">6 - Diária</option>
+                        <option value="10">10 - Contínua</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2 text-gray-700">Probabilidade (P):</label>
+                    <select id="fineP" class="w-full p-2 border rounded shadow-sm">
+                        <option value="0.1">0.1 - Quase impossível</option>
+                        <option value="1">1 - Remota</option>
+                        <option value="6">6 - Possível</option>
+                        <option value="10">10 - Muito provável</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="calculateRisk()" class="no-print mt-8 w-full bg-gray-900 text-white py-4 rounded-xl font-bold hover:bg-black transition-all transform hover:scale-[1.01] shadow-lg">
+            Calcular Nível de Risco
+        </button>
+
+        <div id="resultBox" class="mt-10 p-8 border-2 border-dashed border-gray-200 rounded-2xl text-center bg-white">
+            <p class="text-gray-400 italic">Os resultados da avaliação aparecerão aqui após o cálculo.</p>
+        </div>
+
+        <footer class="mt-12 pt-6 border-t border-gray-100 flex justify-between items-center text-[10px] text-gray-400 uppercase tracking-widest">
+            <span>ESS - Segurança e Saúde</span>
+            <span>Documento Gerado Localmente</span>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('currentDate').valueAsDate = new Date();
+
+        function switchMethod() {
+            const method = document.getElementById('methodSelector').value;
+            document.getElementById('maratFields').classList.toggle('hidden', method !== 'marat');
+            document.getElementById('fineFields').classList.toggle('hidden', method !== 'fine');
+            document.getElementById('resultBox').innerHTML = '<p class="text-gray-400 italic">Os resultados da avaliação aparecerão aqui após o cálculo.</p>';
+        }
+
+        function calculateRisk() {
+            const method = document.getElementById('methodSelector').value;
+            const resultBox = document.getElementById('resultBox');
+            let resultHtml = "";
+
+            if (method === 'marat') {
+                const p = parseInt(document.getElementById('maratP').value);
+                const g = parseInt(document.getElementById('maratG').value);
+                const score = p * g;
+                let level = "";
+                let color = "";
+
+                if (score <= 2) { level = "ACEITÁVEL (Baixo)"; color = "bg-green-500 text-white"; }
+                else if (score <= 6) { level = "MODERADO (Médio)"; color = "bg-yellow-500 text-white"; }
+                else if (score <= 12) { level = "SIGNIFICATIVO (Elevado)"; color = "bg-orange-500 text-white"; }
+                else { level = "INTOLERÁVEL (Crítico)"; color = "bg-red-600 text-white"; }
+
+                resultHtml = `
+                    <div class="${color} p-6 rounded-xl shadow-inner">
+                        <p class="text-sm font-semibold opacity-80 uppercase tracking-wider">Pontuação MARAT: ${score}</p>
+                        <h3 class="text-3xl font-black mt-1">${level}</h3>
+                    </div>
+                `;
+            } else {
+                const c = parseFloat(document.getElementById('fineC').value);
+                const e = parseFloat(document.getElementById('fineE').value);
+                const p = parseFloat(document.getElementById('fineP').value);
+                const score = c * e * p;
+                let level = "";
+                let color = "";
+
+                if (score < 20) { level = "ACEITÁVEL"; color = "bg-green-500 text-white"; }
+                else if (score < 70) { level = "ATENÇÃO"; color = "bg-yellow-500 text-white"; }
+                else if (score < 200) { level = "NOTÁVEL (Correção Necessária)"; color = "bg-orange-500 text-white"; }
+                else if (score < 400) { level = "IMEDIATO (Urgente)"; color = "bg-red-600 text-white"; }
+                else { level = "MUITO ALTO (Interrupção)"; color = "bg-red-800 text-white ring-4 ring-red-200"; }
+
+                resultHtml = `
+                    <div class="${color} p-6 rounded-xl shadow-inner">
+                        <p class="text-sm font-semibold opacity-80 uppercase tracking-wider">Grau Fine: ${score.toFixed(1)}</p>
+                        <h3 class="text-3xl font-black mt-1">${level}</h3>
+                    </div>
+                `;
+            }
+
+            resultBox.innerHTML = resultHtml + `
+                <div class="mt-6 text-left grid grid-cols-1 md:grid-cols-2 gap-4 text-sm border-t pt-4 border-gray-100">
+                    <div class="p-3 bg-gray-50 rounded">
+                        <span class="block font-bold text-gray-700 mb-1">Responsável:</span>
+                        <div class="h-8 border-b border-gray-300"></div>
+                    </div>
+                    <div class="p-3 bg-gray-50 rounded">
+                        <span class="block font-bold text-gray-700 mb-1">Assinatura:</span>
+                        <div class="h-8 border-b border-gray-300"></div>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
